@@ -30,5 +30,5 @@ with open("animals_template.html", "r") as template:
 
 template = template.replace("__REPLACE_ANIMALS_INFO__", output)
 
-with open("animals_data.html", "w") as animals_data:
+with open("animals.html", "w") as animals_data:
     animals_data.write(template)
