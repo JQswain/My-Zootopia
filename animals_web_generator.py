@@ -15,14 +15,15 @@ for animal in animals_data:
         type = animal["characteristics"]["type"]
     except KeyError:
         type = None
-    output += f"Name: {name} \n"
-    output += f"Diet: {diet} \n"
-    output += f"Location: {location}\n"
+    output += '<li class="cards_item">'
+    output += f"Name: {name}<br/>\n"
+    output += f"Diet: {diet}<br/>\n"
+    output += f"Location: {location}<br/>\n"
     if type is not None:
-        output += f"Type: {type}\n\n"
+        output += f"Type: {type}<br/>\n"
     else:
-        output += f"\n"
-
+        output += f""
+    output += '<br/></li>\n'
 print(output)
 
 with open("animals_template.html", "r") as template:
