@@ -6,7 +6,7 @@ def load_data(file_path):
         return data
 
 animals_data = load_data("animals_data.json")
-
+output = ''
 for animal in animals_data:
     name = animal["name"]
     diet = animal["characteristics"]["diet"]
@@ -15,8 +15,20 @@ for animal in animals_data:
         type = animal["characteristics"]["type"]
     except KeyError:
         type = None
-    print(f"Name: {name} \nDiet: {diet} \nLocation: {location}")
+    output += f"Name: {name} \n"
+    output += f"Diet: {diet} \n"
+    output += f"Location: {location}\n"
     if type is not None:
-        print(f"Type: {type}\n")
+        output += f"Type: {type}\n\n"
     else:
-        print()
+        output += f"\n"
+
+print(output)
+
+with open("animals_template.html", "r") as template:
+    template = template.read()
+
+template = template.replace("__REPLACE_ANIMALS_INFO__", output)
+
+with open("animals_data.html", "w") as animals_data:
+    animals_data.write(template)
