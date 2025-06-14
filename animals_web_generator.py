@@ -6,26 +6,32 @@ def load_data(file_path):
         return data
 
 animals_data = load_data("animals_data.json")
-output = ''
-for animal in animals_data:
-    name = animal["name"]
-    diet = animal["characteristics"]["diet"]
-    location = animal["locations"][0]
+
+def serialize_animals(animal_item):
+    output = ''
+    name = animal_item["name"]
+    diet = animal_item["characteristics"]["diet"]
+    location = animal_item["locations"][0]
     try:
-        type = animal["characteristics"]["type"]
+        animal_type = animal_item["characteristics"]["type"]
     except KeyError:
-        type = None
+        animal_type = None
     output += '<li class="cards__item">'
     output += f'<div class="card__title">{name}</div>\n'
-    output += f'<p class="card__text">\n'
-    output += f'<strong>Diet:</strong> {diet}<br/>\n'
-    output += f'<strong>Location:</strong> {location}<br/>\n'
-    if type is not None:
-        output += f'<strong>Type:</strong> {type}<br/>\n'
+    output += f'<div class="card__text">\n'
+    output += f'<ul>\n<li><strong>Diet:</strong> {diet}</li>\n'
+    output += f'<li><strong>Location:</strong> {location}</li>\n'
+    if animal_type is not None:
+        output += f'<li><strong>Type:</strong> {animal_type}</li>\n'
     else:
         output += f""
-    output += '</p></li>\n'
-print(output)
+    output += '</ul>\n</div>\n</li>\n'
+
+    return output
+
+output = ''
+for animal in animals_data:
+    output += serialize_animals(animal)
 
 with open("animals_template.html", "r") as template:
     template = template.read()
