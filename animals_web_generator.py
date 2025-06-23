@@ -5,7 +5,7 @@ def load_data(file_path):
         data = json.load(json_file)
         return data
 
-animals_data = load_data("animals_data.json")
+
 
 def serialize_animals(animal_item):
     output = ''
@@ -29,14 +29,21 @@ def serialize_animals(animal_item):
 
     return output
 
-output = ''
-for animal in animals_data:
-    output += serialize_animals(animal)
+def generate_html():
+    animals_data = load_data("animals_data.json")
+    output = ''
+    for animal in animals_data:
+        output += serialize_animals(animal)
+        with open("animals_template.html", "r") as template:
+            template = template.read()
 
-with open("animals_template.html", "r") as template:
-    template = template.read()
+    template = template.replace("__REPLACE_ANIMALS_INFO__", output)
 
-template = template.replace("__REPLACE_ANIMALS_INFO__", output)
+    with open("animals.html", "w") as animals_data:
+        animals_data.write(template)
 
-with open("animals.html", "w") as animals_data:
-    animals_data.write(template)
+def main():
+   generate_html()
+
+if __name__ == "__main__":
+    main()
